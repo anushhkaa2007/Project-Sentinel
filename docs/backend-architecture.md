@@ -52,7 +52,15 @@ Python
 
 ### Web Framework
 
-Flask
+FastAPI
+
+### ASGI Server
+
+Uvicorn
+
+### Data Validation / Schema
+
+Pydantic
 
 ### API Format
 
@@ -62,15 +70,15 @@ REST-style HTTP API
 
 JSON
 
-### Initial Storage
+### Storage
 
-For the MVP, use a simple storage approach where practical. Do not introduce a complex database architecture unless the project requires it.
+SQLite
 
-SQLite may be introduced later for investigation history and persistence.
+Use SQLite for investigation history and persistence. Do not introduce a more complex database architecture unless the project requires it.
 
 ### Testing
 
-Python testing framework such as pytest.
+Python testing framework such as pytest, using FastAPI's TestClient.
 
 ---
 
@@ -162,8 +170,8 @@ The structure may evolve as the project grows, but new code should be placed in 
 
 The API layer is responsible for:
 
-- Receiving HTTP requests
-- Validating basic request structure
+- Receiving HTTP requests via FastAPI path operations and routers
+- Validating request and response structure with Pydantic models
 - Calling the appropriate service
 - Returning JSON responses
 - Returning appropriate HTTP status codes
@@ -173,7 +181,7 @@ The API layer should not contain the actual OSINT collection logic.
 For example:
 
 ```text
-Route
+FastAPI router
   ↓
 Investigation Service
   ↓
@@ -184,7 +192,7 @@ DNS Service
 Instead of:
 
 ```text
-Route
+FastAPI router
   ↓
 Everything
 
@@ -330,7 +338,7 @@ Example:
 
 ```
 
-Validation should be centralized rather than duplicated across multiple routes.
+Validation should be centralized rather than duplicated across multiple routers. Use Pydantic models for request and response schemas, and keep domain-specific target validation in shared utilities or services.
 
 ---
 
@@ -397,7 +405,7 @@ Technology detection should be treated as an observation, not guaranteed truth.
 
 Different external sources may return information in different formats.
 
-The backend should normalize these results into a consistent Sentinel data model.
+The backend should normalize these results into a consistent Sentinel data model, represented with Pydantic models.
 
 Example:
 
@@ -571,6 +579,8 @@ test_validator()
 
 External services should be mocked where appropriate so tests do not depend on live external systems.
 
+API tests should use FastAPI's TestClient rather than calling Uvicorn as a live server.
+
 ---
 
 ## 17. Development Principles
@@ -585,11 +595,11 @@ Do not introduce microservices, queues, containers, or complex infrastructure wi
 
 ### Separate responsibilities
 
-Routes handle HTTP.
+FastAPI routers handle HTTP.
 
 Services handle business/data collection logic.
 
-Models define data structures.
+Pydantic models define request, response, and domain data structures.
 
 Utilities handle reusable helpers.
 
@@ -603,7 +613,7 @@ A missing source should not automatically destroy an entire investigation.
 
 ### Validate input
 
-Never trust data received from the frontend.
+Never trust data received from the frontend. Validate it with Pydantic and shared domain validators.
 
 ### Don't hard-code secrets
 
@@ -624,7 +634,7 @@ Backend development should follow this order:
 ```text
 1. Python environment
         ↓
-2. Flask application
+2. FastAPI application (Uvicorn)
         ↓
 3. Health endpoint
         ↓
