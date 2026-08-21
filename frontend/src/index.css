@@ -1,0 +1,71 @@
+:root {
+  --bg-base: #07090e;
+  --bg-elevated: #0d1219;
+  --bg-panel: #111821;
+  --bg-input: #0a0f16;
+  --border: #1e2a38;
+  --border-strong: #2a3d52;
+  --text: #c5d0dc;
+  --text-muted: #7a8a9c;
+  --text-heading: #eef4fa;
+  --accent: #3ee0c5;
+  --accent-dim: rgba(62, 224, 197, 0.12);
+  --accent-border: rgba(62, 224, 197, 0.4);
+  --danger: #f07178;
+  --grid: rgba(62, 224, 197, 0.04);
+  --sans: 'Segoe UI', system-ui, sans-serif;
+  --mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  --header-height: 64px;
+  --radius: 8px;
+  --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg-base);
+  color-scheme: dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(62, 224, 197, 0.08), transparent),
+    linear-gradient(180deg, #07090e 0%, #0a1018 100%);
+}
+
+#root {
+  min-height: 100svh;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--accent);
+}
